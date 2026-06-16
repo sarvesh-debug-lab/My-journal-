@@ -1,0 +1,531 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;600&family=Patrick+Hand&family=DM+Sans:wght@300;400;500&family=Special+Elite&family=Nunito:wght@400;500;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background: #D4C9B8;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, #C8BCAA 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, #B8AE9E 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 80px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Shell ── */
+.app-shell {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Top bar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 12px;
+}
+
+.topbar-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #6B5E4E;
+  letter-spacing: 0.02em;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+  color: #6B5E4E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+/* ── Search ── */
+.search-wrap {
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #2C2416;
+}
+
+.search-input::placeholder { color: #A89880; }
+
+.search-results {
+  border-top: 1px solid rgba(0,0,0,0.07);
+}
+
+.search-result-item {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: rgba(255, 255, 255, 0.65); }
+
+.sr-date {
+  font-size: 0.72rem;
+  color: #A89880;
+  margin-bottom: 2px;
+}
+
+.sr-text {
+  font-size: 0.9rem;
+  color: #2C2416;
+}
+
+.sr-text.done {
+  text-decoration: line-through;
+  color: #A89880;
+}
+
+/* ── Notebook ── */
+.notebook {
+  border-radius: 4px 12px 12px 4px;
+  box-shadow:
+    -6px 0 0 0 #8B7355,
+    0 4px 24px rgba(0, 0, 0, 0.18),
+    0 1px 4px rgba(0, 0, 0, 0.12),
+    4px 0 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  position: relative;
+  transition: background 0.4s ease;
+}
+
+/* Ruled lines */
+.ruled-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Red margin line */
+.margin-line {
+  position: absolute;
+  left: 60px;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Notebook inner writing area */
+.notebook-inner {
+  padding: 0 0 60px 68px;
+  min-height: 640px;
+  position: relative;
+  cursor: text;
+  z-index: 2;
+}
+
+/* ── Date header ── */
+.date-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 16px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.date-nav-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #8B7355;
+  opacity: 0.6;
+  font-size: 1.2rem;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: opacity 0.2s, background 0.2s;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.date-nav-btn:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.date-text {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: #2C2416;
+  flex: 1;
+  text-align: center;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.today-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #E07060;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* ── Quote line ── */
+.quote-line {
+  padding: 0 20px 16px 0;
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: #A8967E;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Task rows ── */
+.tasks-area {
+  position: relative;
+  z-index: 2;
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 16px 0 0;
+  gap: 10px;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  position: relative;
+}
+
+.task-row.deleting {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.task-row:hover .row-action {
+  opacity: 1;
+}
+
+/* Checkbox */
+.checkbox-wrap {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-check {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #8B7355;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.12s;
+  flex-shrink: 0;
+}
+
+.checkbox-wrap:hover .custom-check {
+  transform: scale(1.12);
+}
+
+.custom-check.checked {
+  background: #8B7355;
+  border-color: #8B7355;
+}
+
+.checkmark {
+  color: white;
+  font-size: 0.7rem;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.custom-check.checked .checkmark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Task input */
+.task-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #2C2416;
+  line-height: 44px;
+  height: 44px;
+  padding: 0;
+  caret-color: #8B7355;
+  transition: color 0.2s;
+}
+
+.task-input::placeholder { color: #B8A898; }
+
+.task-input.done {
+  text-decoration: line-through;
+  text-decoration-color: #A89878;
+  color: #A89878;
+}
+
+/* Row actions (pin / delete) */
+.row-action {
+  opacity: 0;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, background 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+
+.pin-btn {
+  font-size: 0.72rem;
+  color: #C0A860;
+}
+
+.pin-btn.pinned {
+  opacity: 1;
+  color: #D4A020;
+}
+
+.pin-btn:hover { background: rgba(212, 160, 32, 0.12); }
+
+.delete-btn {
+  font-size: 1.05rem;
+  color: #C08070;
+}
+
+.delete-btn:hover {
+  background: rgba(200, 80, 60, 0.12);
+  color: #C04030;
+}
+
+/* ── Stats bar ── */
+.stats-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px 0 0;
+  position: relative;
+  z-index: 2;
+}
+
+.stats-text {
+  font-size: 0.75rem;
+  color: #A89880;
+  white-space: nowrap;
+}
+
+.progress-track {
+  flex: 1;
+  height: 2.5px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: #8B7355;
+  transition: width 0.4s ease;
+}
+
+/* ── Page animation ── */
+.page-wrap {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.page-wrap.slide-left  { transform: translateX(-30px); opacity: 0; }
+.page-wrap.slide-right { transform: translateX(30px);  opacity: 0; }
+
+.page-wrap.enter-right { animation: enterRight 0.3s ease forwards; }
+.page-wrap.enter-left  { animation: enterLeft  0.3s ease forwards; }
+
+@keyframes enterRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes enterLeft {
+  from { transform: translateX(-20px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* ── Settings panel ── */
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.settings-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.settings-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 280px;
+  background: #FAF7F2;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.18);
+  z-index: 100;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.settings-panel.open {
+  transform: translateX(0);
+}
+
+.settings-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2C2416;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.settings-section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #A89880;
+  margin-bottom: 10px;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.theme-swatch {
+  height: 44px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2.5px solid transparent;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: #6B5E4E;
+  font-weight: 500;
+}
+
+.theme-swatch:hover { transform: scale(1.05); }
+
+.theme-swatch.active {
+  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.2);
+}
+
+.font-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.font-opt {
+  padding: 9px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  color: #2C2416;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.font-opt:hover { background: #F0EBE2; }
+
+.font-opt.active {
+  border-color: #8B7355;
+  background: #F5F0E8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  body { padding: 12px 8px 60px; }
+  .notebook-inner { padding-left: 52px; }
+  .margin-line { left: 46px; }
+  .date-text { font-size: 1.15rem; }
+  .settings-panel { width: 88vw; }
+}
